@@ -36,6 +36,10 @@ header {
     color: white;
     border-radius: 8px;
 }
+#login-signin a{
+    text-decoration: none;
+    color: white;
+}
 
 /* nav */
 
