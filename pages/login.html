@@ -10,21 +10,25 @@
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="#">
+            <form action="#" id="register">
                 <h1>Rigistration</h1>
                 <div class="input-field">
-                    <input type="text" placeholder="Username" />
+                    <input type="text" id="name" placeholder="Username" required />
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="input-field">
-                    <input type="email" placeholder="Email@gmail.com" />
+                    <input type="email" id="email" placeholder="Email@gmail.com" required/>
                     <i class="fas fa-envelope"></i>
                 </div>
-                <div class="input-field">
-                    <input type="password" placeholder="Password" />
-                    <i class="fas fa-lock"></i>
+                <div class="passwordSecure">
+                    <div class="input-field">
+                        <input type="password" class='password' id="password" placeholder="Password" required/>
+                        <i class="fa-solid fa-eye-low-vision" id="closeR" style="cursor:pointer; display: none;"></i>
+                        <i class="fa-solid fa-eye" id="openR" style="cursor:pointer"></i>
+                    </div>
+                    <p id="text" style="display: block; font-size: 8px;justify-self: start;margin-left: 8px; color:white"> Password need more 8</p>
                 </div>
-                <button class="main-btn">Register</button>
+                <button class="main-btn" type="submit" id="btn">Register</button>
                 <p>or register with social platforms</p>
                 <div class="social-container">
                     <div class="social-box">G</div>
@@ -39,15 +43,16 @@
             <form action="#">
                 <h1>Login</h1>
                 <div class="input-group">
-                    <input type="text" placeholder="Username">
+                    <input type="text" placeholder="Username or Email" id="username">
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="input-group">
-                    <input type="password" placeholder="Password">
-                    <i class="fas fa-lock"></i>
+                    <input type="password" class="password" placeholder="Password" id="userpassword">
+                        <i class="fa-solid fa-eye-low-vision" id="closeL" style="cursor:pointer; display: none;"></i>
+                        <i class="fa-solid fa-eye" id="openL" style="cursor:pointer"></i>
                 </div>
                 <a href="#" class="forgot">Forgot Password?</a>
-                <button class="main-btn">Login</button>
+                <button class="main-btn" id="login"><a href="#" style="text-decoration: none; color:white;">Login</a></button>
                 <p>or login with social platforms</p>
                 <div class="social-container">
                     <div class="social-box">G</div>

@@ -59,7 +59,9 @@ form {
     margin: 8px 0; 
     padding: 12px 15px;
 }
-
+ .passwordSecure {
+        width: 100%; 
+ }
 input { 
     border: none; 
     background: transparent; 
