@@ -50,7 +50,7 @@ musicCards.forEach(card => {
   card.addEventListener('click', () => {
     const img = card.querySelector('img').src;
     const title = card.querySelector('p').innerText;
-    const sound = card.dataset.audio; // ✅ correct
+    const sound = card.dataset.audio; 
 
     albumImg.src = img;
     songTitle.innerText = title;
