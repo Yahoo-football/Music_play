@@ -306,7 +306,6 @@ section {
     justify-content: center;
     align-items: center;
     color: #333;
-    padding-left: 5vh;
     padding-top: 5vh;
 }
 
@@ -323,6 +322,8 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
+    justify-self: center;
+    
 }
 
 .header {
