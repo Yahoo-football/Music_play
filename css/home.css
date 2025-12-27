@@ -334,6 +334,12 @@ section {
     font-size: 15px;
     font-weight: 600;
 }
+.header i{
+    margin-right: 4vh;
+}
+.header div{
+    margin-right: 7vh;
+}
 
 .header .back {
     font-size: 20px;
