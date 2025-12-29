@@ -1,70 +1,81 @@
-// const favorite = document.querySelector('.folder-card');
-// const playMusic = document.querySelector('.big-big-play');
-// const musicCards = document.querySelectorAll('.music-card');
-// const back = document.querySelector('.back');
-
-// //-------------------------//
-// //---Display none & block--//
-// //-------------------------//
-// favorite.style.display = 'block';
-// playMusic.style.display = 'none';
-
-// // Click any music card → show player
-// musicCards.forEach(card => {
-//     card.addEventListener('click', () => {
-//         favorite.style.display = 'none';
-//         playMusic.style.display = 'block';
-//     });
-// });
-
-// // Click back → show music list
-// back.addEventListener('click', () => {
-//     playMusic.style.display = 'none';
-//     favorite.style.display = 'block';
-// });
-
-
 const favorite = document.querySelector('.folder-card');
 const playMusic = document.querySelector('.big-big-play');
 const musicCards = document.querySelectorAll('.music-card');
-const back = document.querySelector('.back');
+const backBtn = document.querySelector('.back');
 
-// Player elements
 const albumImg = document.querySelector('.album-art img');
 const songTitle = document.querySelector('.song-title');
-const audio = document.getElementById('audioPlayer');
 const playBtn = document.querySelector('.play-btn');
+const audio = document.getElementById('audioPlayer');
+const progressBar = document.querySelector('.progress-bar');
+const currentTimeEl = document.querySelector('.current-time');
+const totalTimeEl = document.querySelector('.total-time');
 
 let isPlaying = false;
 
-// --------------------
-// Click music card
-// --------------------
+/* ======================
+   FORMAT TIME
+====================== */
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+/* ======================
+   UPDATE PROGRESS
+====================== */
+function updateProgress() {
+  const progress = (audio.currentTime / audio.duration) * 100;
+  progressBar.value = progress || 0;
+  currentTimeEl.textContent = formatTime(audio.currentTime);
+  totalTimeEl.textContent = formatTime(audio.duration);
+}
+
+/* ======================
+   SET AUDIO SOURCE
+====================== */
+function setAudioSource(src) {
+  audio.src = src;
+  audio.addEventListener('loadedmetadata', () => {
+    totalTimeEl.textContent = formatTime(audio.duration);
+  });
+  audio.addEventListener('timeupdate', updateProgress);
+}
+
+/* ======================
+   CLICK MUSIC CARD
+====================== */
 musicCards.forEach(card => {
   card.addEventListener('click', () => {
-    const imgSrc = card.querySelector('img').src;
+    const img = card.querySelector('img').src;
     const title = card.querySelector('p').innerText;
-    const audioSrc = card.getAttribute('data-audio');
+    const sound = card.dataset.audio; // ✅ correct
 
-    // Set player data
-    albumImg.src = imgSrc;
+    albumImg.src = img;
     songTitle.innerText = title;
-    audio.src = audioSrc;
+    setAudioSource(sound);
 
-    // Show player
     favorite.style.display = 'none';
     playMusic.style.display = 'block';
 
-    // Play audio
     audio.play();
     playBtn.innerText = '⏸';
     isPlaying = true;
   });
 });
 
-// --------------------
-// Play / Pause button
-// --------------------
+/* ======================
+   PROGRESS BAR SEEK
+====================== */
+progressBar.addEventListener('input', () => {
+  const seekTime = (progressBar.value / 100) * audio.duration;
+  audio.currentTime = seekTime;
+});
+
+/* ======================
+   PLAY / PAUSE
+====================== */
 playBtn.addEventListener('click', () => {
   if (isPlaying) {
     audio.pause();
@@ -76,10 +87,10 @@ playBtn.addEventListener('click', () => {
   isPlaying = !isPlaying;
 });
 
-// --------------------
-// Back button
-// --------------------
-back.addEventListener('click', () => {
+/* ======================
+   BACK BUTTON
+====================== */
+backBtn.addEventListener('click', () => {
   audio.pause();
   audio.currentTime = 0;
 

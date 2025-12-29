@@ -47,59 +47,59 @@
       </div>
       <div class="menu">
         <i class='bx bx-list-ul'></i>
-        <button class="button">Login</button>
+        <i class='bx bx-user-circle'></i>
       </div>
     </nav>
     <main class="favorite-song">
       <div class="folder-card">
         <h1>Favorite Song</h1>
         <div class="music-list">
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/2.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song2.mp3">
             <img src="/img/3.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song3.mp3">
             <img src="/img/4.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song4.mp3">
             <img src="/img/2.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song5.mp3">
             <img src="/img/3.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song6.mp3">
             <img src="/img/2.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/3.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song2.mp3">
             <img src="/img/4.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song3.mp3">
             <img src="/img/2.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song4.mp3">
             <img src="/img/3.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
@@ -108,52 +108,52 @@
         <p style="text-align: end;margin: 8px 36px 0px 0px;"><a href="#" style=" color:rgb(83, 83, 255);">More</a></p>
         <h1>Popular Song</h1>
         <div class="music-list">
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/2.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/3.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/4.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/2.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/3.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/2.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/3.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/4.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/2.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
           </div>
-          <div class="music-card">
+          <div class="music-card" data-audio="../audio/song1.mp3">
             <img src="/img/3.png" alt="">
             <p>Top song of 2025: Global</p>
             <span>Music player</span>
@@ -170,7 +170,7 @@
       <div class="big-big-play" style="display: none;">
         <div class="player">
           <div class="header">
-            <div class="back">←</div>
+            <div class="back"><i class='bx bx-arrow-back'></i></div>
             <div>Now Playing</div>
             <div class="search"></div>
           </div>
@@ -191,6 +191,11 @@
           <div class="song-info">
             <div class="song-title">Marshmello - Home</div>
             <div class="artist">JOYTIME</div>
+          </div>
+          <div class="progress-container">
+            <span class="current-time">0:00</span>
+            <input type="range" value="0" class="progress-bar" min="0" max="100">
+            <span class="total-time">0:00</span>
           </div>
 
           <div class="controls">
