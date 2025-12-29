@@ -71,7 +71,7 @@ input {
 i { color: #333; }
 
 .main-btn {
-    background-color: #0f2e9e; 
+    background-color: #0095FD; 
     color: white;
     border-radius: 10px; 
     border: none; 
@@ -113,7 +113,7 @@ i { color: #333; }
 }
 
 .overlay {
-    background: #1625a9; 
+    background: #0095FD; 
     color: white;
     position: relative; 
     left: -100%; 

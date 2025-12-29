@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link rel="stylesheet" href="../css/music.css" />
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  <nav class="left">
+    <h1>Music</h1>
+    <input type="text" placeholder="Search">
+    <div class="home">
+      <i class='bx bx-home'></i>
+      <a href="">Home</a>
+    </div>
+    <div class="home">
+      <i class='bx bx-customize'></i>
+      <a href="">Own Music</a>
+    </div>
+    <div class="home">
+      <i class='bx bx-radio'></i>
+      <a href="">Radio</a>
+    </div>
+  </nav>
+  <div class="right">
+    <nav class="top flex">
+      <div class="sound">
+        <i class='bx bx-volume-full'></i>
+      </div>
+      <div class="play">
+        <i class='bx bx-rewind'></i>
+        <i class='bx bx-play'></i>
+        <i class='bx bx-fast-forward'></i>
+      </div>
+      <div class="sound">
+        <i class='bx bx-volume-mute'></i>
+      </div>
+      <div class="zoom">
+        <i class='bx bxs-music'></i>
+      </div>
+      <div class="zoom-two">
+
+      </div>
+      <div class="menu">
+        <i class='bx bx-list-ul'></i>
+        <button class="button">Sign In</button>
+      </div>
+    </nav>
+    <main>
+      <h1 class="text">Own Music</h1>
+      <div class="music-list">
+        <label class="upload-card">
+          <input type="file" id="file-upload" />
+          <div class="card-content">
+            <span class="card-title">Upload file</span>
+            <div class="plus-button">🎵</div>
+          </div>
+          <p>music</p>
+        </label>
+
+      </div>
+      <!-- Music Upload Form (Hidden First) -->
+      <div id="music-form" class="music-form">
+        <h3>Add Music Details</h3>
+        <label class="upload-card">
+        <!-- <div class="music1 music"> -->
+        <input type="text" id="songTitle" placeholder="Song title">
+        <div class="card-content"></div>
+        <!-- </div> -->
+         <div class="button-group">
+          <button id="addMusicBtn">Add Music</button>
+          <button class="delete-btn">Delete</button>
+        </div>
+      <!-- </div> -->
+      </label>
+    </main>
+
+  </div>
+  <script>
+    const fileInput = document.getElementById("file-upload");
+    const musicForm = document.getElementById("music-form");
+    const musicList = document.getElementById("musicList");
+    const addBtn = document.getElementById("addMusicBtn");
+    const songTitleInput = document.getElementById("songTitle");
+
+    let selectedFile = null;
+
+    let deleteBtn = document.createElement("span");
+    deleteBtn.className = "delete";
+    deleteBtn.textContent = "delete";
+    // Show form after file upload
+    fileInput.addEventListener("change", function () {
+      if (this.files.length > 0) {
+        selectedFile = this.files[0];
+        musicForm.style.display = "block";
+      }
+    });
+
+    // Add new music card
+    addBtn.addEventListener("click", function () {
+      if (!songTitleInput.value) {
+        alert("Please enter song title");
+        return;
+      }
+
+      const musicCard = document.createElement("div");
+      musicCard.className = "music";
+
+      musicCard.innerHTML = `
+        <p>${songTitleInput.value}</p>
+        <button class="delete-btn">Delete</button>
+      `;
+
+      musicList.appendChild(musicCard);
+
+      // Reset
+      songTitleInput.value = "";
+      fileInput.value = "";
+      musicForm.style.display = "none";
+
+      // Delete button
+      musicCard.querySelector(".delete-btn").onclick = function () {
+        musicCard.remove();
+      };
+    });
+  </script>
+
+
+</body>
+
+</html>
