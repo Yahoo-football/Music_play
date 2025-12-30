@@ -445,6 +445,14 @@ section {
 .controls #sa:hover {
     background-color: #ebe9e9;
 }
+.controls #va {
+    border-radius: 50%;
+    padding: 3px 10px 6px 10px;
+    text-align: center;
+}
+.controls #va:hover {
+    background-color: #ebe9e9;
+}
 
 .control-btn {
     background: none;

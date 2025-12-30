@@ -10,6 +10,9 @@ const audio = document.getElementById('audioPlayer');
 const progressBar = document.querySelector('.progress-bar');
 const currentTimeEl = document.querySelector('.current-time');
 const totalTimeEl = document.querySelector('.total-time');
+const artist = document.querySelector('.artist');
+const span = document.querySelectorAll('span');
+
 
 let isPlaying = false;
 
@@ -50,10 +53,12 @@ musicCards.forEach(card => {
   card.addEventListener('click', () => {
     const img = card.querySelector('img').src;
     const title = card.querySelector('p').innerText;
-    const sound = card.dataset.audio; 
+    const sound = card.dataset.audio;
+    const songer = card.querySelector('span').textContent;
 
     albumImg.src = img;
     songTitle.innerText = title;
+    artist.textContent = songer;
     setAudioSource(sound);
 
     favorite.style.display = 'none';
@@ -100,4 +105,129 @@ backBtn.addEventListener('click', () => {
   playBtn.innerText = '▶';
   isPlaying = false;
 });
+
+/* ======================
+    LOOP RADIO
+====================== */
+
+const cards = document.querySelectorAll(".music-card");
+const audios = document.getElementById("audioPlayer");
+const loopBtn = document.getElementById("radioLoop");
+const shuffleBtn = document.getElementById("savideo");
+
+let currentCard = null;
+let isLooping = false;
+let isShuffle = false;
+
+/* 🎵 Play audio when card is clicked */
+cards.forEach(card => {
+  card.addEventListener("click", () => {
+    const song = card.dataset.audio;
+
+    // Toggle play / pause if same card
+    if (currentCard === card && !audios.paused) {
+      audios.pause();
+      return;
+    }
+
+    currentCard = card;
+    audios.src = song;
+    audios.play();
+  });
+});
+
+/* 🔁 Loop button */
+loopBtn.addEventListener("click", () => {
+  isLooping = !isLooping;
+  audios.loop = isLooping;
+
+  loopBtn.style.color = isLooping ? "blue" : "gray";
+  loopBtn.classList.toggle("active", isLooping);
+});
+
+/* 🔀 Shuffle button */
+shuffleBtn.addEventListener("click", () => {
+  isShuffle = !isShuffle;
+  shuffleBtn.style.color = isShuffle ? "blue" : "gray";
+});
+
+/* 🎧 Play random song */
+function playRandomSong() {
+  let randomCard;
+
+  do {
+    randomCard = cards[Math.floor(Math.random() * cards.length)];
+  } while (randomCard === currentCard && cards.length > 1);
+
+  currentCard = randomCard;
+  audios.src = randomCard.dataset.audio;
+  audios.play();
+}
+
+/* ⏭ Auto change song when finished */
+audios.addEventListener("ended", () => {
+  if (isLooping) {
+    audios.currentTime = 0;
+    audios.play();
+  } else if (isShuffle) {
+    playRandomSong();
+  }
+});
+
+/* ======================
+  CHANGE SONG
+====================== */
+
+const cardone = document.querySelectorAll(".music-card");
+const audioOne = document.getElementById("audioPlayer");
+
+const nextBtn = document.getElementById("sa"); // ⏭
+const prevBtn = document.getElementById("va"); // ⏮
+
+let currentIndex = 0;
+
+// ▶ Play song by index
+function playSong(index) {
+  const song = cards[index].dataset.audio;
+  audioOne.src = song;
+  audioOne.play();
+
+  // Active UI (optional)
+  cardone.forEach(card => card.classList.remove("active"));
+  cardone[index].classList.add("active");
+}
+
+// 🎵 Click card
+cardone.forEach((card, index) => {
+  card.addEventListener("click", () => {
+    currentIndex = index;
+    playSong(currentIndex);
+  });
+});
+
+// ⏭ Next
+nextBtn.addEventListener("click", () => {
+  currentIndex++;
+
+  if (currentIndex >= cardone.length) {
+    currentIndex = 0;
+  }
+
+  playSong(currentIndex);
+});
+
+// ⏮ Previous
+prevBtn.addEventListener("click", () => {
+  currentIndex--;
+
+  if (currentIndex < 0) {
+    currentIndex = cards.length - 1;
+  }
+
+  playSong(currentIndex);
+});
+
+/* ======================
+  change music
+====================== */
 
