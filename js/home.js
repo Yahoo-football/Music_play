@@ -67,6 +67,7 @@ musicCards.forEach(card => {
     audio.play();
     playBtn.innerText = '⏸';
     isPlaying = true;
+    animateWaveform(); // Initialize waveform animation
   });
 });
 
@@ -90,6 +91,7 @@ playBtn.addEventListener('click', () => {
     playBtn.innerText = '⏸';
   }
   isPlaying = !isPlaying;
+  animateWaveform(); // Update waveform when play/pause state changes
 });
 
 /* ======================
@@ -104,6 +106,7 @@ backBtn.addEventListener('click', () => {
 
   playBtn.innerText = '▶';
   isPlaying = false;
+  animateWaveform(); // Reset waveform when going back
 });
 
 /* ======================
@@ -162,6 +165,18 @@ function playRandomSong() {
   currentCard = randomCard;
   audios.src = randomCard.dataset.audio;
   audios.play();
+  
+  // Update player UI with random song info
+  const img = randomCard.querySelector('img').src;
+  const title = randomCard.querySelector('p').innerText;
+  const songer = randomCard.querySelector('span').textContent;
+  
+  albumImg.src = img;
+  songTitle.innerText = title;
+  artist.textContent = songer;
+  
+  // Update current index to match the random song
+  currentIndex = Array.from(cards).indexOf(randomCard);
 }
 
 /* ⏭ Auto change song when finished */
@@ -188,9 +203,19 @@ let currentIndex = 0;
 
 // ▶ Play song by index
 function playSong(index) {
-  const song = cards[index].dataset.audio;
+  const card = cards[index];
+  const song = card.dataset.audio;
+  const img = card.querySelector('img').src;
+  const title = card.querySelector('p').innerText;
+  const songer = card.querySelector('span').textContent;
+  
   audioOne.src = song;
   audioOne.play();
+  
+  // Update player UI
+  albumImg.src = img;
+  songTitle.innerText = title;
+  artist.textContent = songer;
 
   // Active UI (optional)
   cardone.forEach(card => card.classList.remove("active"));
@@ -202,6 +227,12 @@ cardone.forEach((card, index) => {
   card.addEventListener("click", () => {
     currentIndex = index;
     playSong(currentIndex);
+    
+    // Show player and hide list
+    favorite.style.display = 'none';
+    playMusic.style.display = 'block';
+    playBtn.innerText = '⏸';
+    isPlaying = true;
   });
 });
 
@@ -225,6 +256,80 @@ prevBtn.addEventListener("click", () => {
   }
 
   playSong(currentIndex);
+});
+
+/* ======================
+  VOLUME CONTROLS
+====================== */
+const volumeUpBtn = document.querySelector('.controls .bx-volume-full');
+const volumeDownBtn = document.querySelector('.controls .bx-volume-mute');
+
+volumeUpBtn.addEventListener('click', () => {
+  if (audio.volume < 1) {
+    audio.volume = Math.min(1, audio.volume + 0.1);
+    showVolumeNotification();
+  }
+});
+
+volumeDownBtn.addEventListener('click', () => {
+  if (audio.volume > 0) {
+    audio.volume = Math.max(0, audio.volume - 0.1);
+    showVolumeNotification();
+  }
+});
+
+function showVolumeNotification() {
+  const volumePercent = Math.round(audio.volume * 100);
+  console.log(`Volume: ${volumePercent}%`);
+}
+
+/* ======================
+  PROGRESS SOUND VISUALIZATION
+====================== */
+const waveformBars = document.querySelectorAll('.waveform .bar');
+
+function animateWaveform() {
+  if (isPlaying) {
+    waveformBars.forEach((bar, index) => {
+      const height = Math.random() * 100;
+      bar.style.height = `${height}%`;
+      bar.style.opacity = '0.8';
+    });
+  } else {
+    waveformBars.forEach(bar => {
+      bar.style.height = '20%';
+      bar.style.opacity = '0.3';
+    });
+  }
+}
+
+// Update waveform animation based on audio
+audio.addEventListener('timeupdate', () => {
+  if (isPlaying) {
+    animateWaveform();
+  }
+});
+
+setInterval(() => {
+  if (isPlaying) {
+    animateWaveform();
+  }
+}, 200);
+
+/* ======================
+  ENHANCED PROGRESS BAR
+====================== */
+progressBar.addEventListener('input', () => {
+  const seekTime = (progressBar.value / 100) * audio.duration;
+  audio.currentTime = seekTime;
+});
+
+// Add hover effect to show time on progress bar
+progressBar.addEventListener('mousemove', (e) => {
+  const rect = progressBar.getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  const hoverTime = percent * audio.duration;
+  progressBar.title = formatTime(hoverTime);
 });
 
 /* ======================
