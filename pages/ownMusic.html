@@ -533,11 +533,15 @@
 
         const addBtn = document.createElement('button');
         addBtn.className = 'btn-small btn-add';
-        addBtn.innerHTML = '<i class="bx bx-list-plus" style="font-size:16px"></i><span>Add</span>';
+        addBtn.setAttribute('title', 'Add to playlist');
+        addBtn.setAttribute('aria-label', 'Add to playlist');
+        addBtn.innerHTML = '<i class="bx bx-list-plus" style="font-size:18px"></i>';
 
         const delBtn = document.createElement('button');
         delBtn.className = 'btn-small btn-del';
-        delBtn.innerHTML = '<i class="bx bx-trash" style="font-size:16px"></i><span>Delete</span>';
+        delBtn.setAttribute('title', 'Delete song');
+        delBtn.setAttribute('aria-label', 'Delete song');
+        delBtn.innerHTML = '<i class="bx bx-trash" style="font-size:18px"></i>';
 
         controls.append(addBtn, delBtn);
 
