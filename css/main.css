@@ -1,6 +1,7 @@
-*{
+* {
     font-family: sans-serif;
 }
+
 body {
     margin: 0;
     padding: 0;
@@ -17,26 +18,31 @@ header {
     justify-content: space-between;
     padding: 0px 50px 0px 50px;
 }
+
 .shadow {
     box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
 
 }
-#logo-name h1{
+
+#logo-name h1 {
     font-weight: 520;
 }
+
 #login-signin {
     display: flex;
     flex-direction: row;
     gap: 3vh;
 }
+
 #login-signin #login,
-#login-signin #sign-in{
+#login-signin #sign-in {
     padding: 10px 30px;
     background-color: #0095FD;
     color: white;
     border-radius: 8px;
 }
-#login-signin a{
+
+#login-signin a {
     text-decoration: none;
     color: white;
 }
@@ -51,13 +57,16 @@ nav {
     background-color: #0095FD;
     height: 90vh;
 }
+
 nav h1 {
     font-size: 50px;
     color: white;
 }
+
 nav img {
     height: 50vh;
 }
+
 nav .text p {
     display: flex;
     justify-content: center;

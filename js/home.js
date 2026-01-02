@@ -10,6 +10,9 @@ const audio = document.getElementById('audioPlayer');
 const progressBar = document.querySelector('.progress-bar');
 const currentTimeEl = document.querySelector('.current-time');
 const totalTimeEl = document.querySelector('.total-time');
+const artist = document.querySelector('.artist');
+const span = document.querySelectorAll('span');
+
 
 let isPlaying = false;
 
@@ -50,10 +53,12 @@ musicCards.forEach(card => {
   card.addEventListener('click', () => {
     const img = card.querySelector('img').src;
     const title = card.querySelector('p').innerText;
-    const sound = card.dataset.audio; // ✅ correct
+    const sound = card.dataset.audio;
+    const songer = card.querySelector('span').textContent;
 
     albumImg.src = img;
     songTitle.innerText = title;
+    artist.textContent = songer;
     setAudioSource(sound);
 
     favorite.style.display = 'none';
@@ -62,6 +67,7 @@ musicCards.forEach(card => {
     audio.play();
     playBtn.innerText = '⏸';
     isPlaying = true;
+    animateWaveform(); // Initialize waveform animation
   });
 });
 
@@ -85,6 +91,7 @@ playBtn.addEventListener('click', () => {
     playBtn.innerText = '⏸';
   }
   isPlaying = !isPlaying;
+  animateWaveform(); // Update waveform when play/pause state changes
 });
 
 /* ======================
@@ -99,5 +106,235 @@ backBtn.addEventListener('click', () => {
 
   playBtn.innerText = '▶';
   isPlaying = false;
+  animateWaveform(); // Reset waveform when going back
 });
+
+/* ======================
+    LOOP RADIO
+====================== */
+
+const cards = document.querySelectorAll(".music-card");
+const audios = document.getElementById("audioPlayer");
+const loopBtn = document.getElementById("radioLoop");
+const shuffleBtn = document.getElementById("savideo");
+
+let currentCard = null;
+let isLooping = false;
+let isShuffle = false;
+
+/* 🎵 Play audio when card is clicked */
+cards.forEach(card => {
+  card.addEventListener("click", () => {
+    const song = card.dataset.audio;
+
+    // Toggle play / pause if same card
+    if (currentCard === card && !audios.paused) {
+      audios.pause();
+      return;
+    }
+
+    currentCard = card;
+    audios.src = song;
+    audios.play();
+  });
+});
+
+/* 🔁 Loop button */
+loopBtn.addEventListener("click", () => {
+  isLooping = !isLooping;
+  audios.loop = isLooping;
+
+  loopBtn.style.color = isLooping ? "blue" : "gray";
+  loopBtn.classList.toggle("active", isLooping);
+});
+
+/* 🔀 Shuffle button */
+shuffleBtn.addEventListener("click", () => {
+  isShuffle = !isShuffle;
+  shuffleBtn.style.color = isShuffle ? "blue" : "gray";
+});
+
+/* 🎧 Play random song */
+function playRandomSong() {
+  let randomCard;
+
+  do {
+    randomCard = cards[Math.floor(Math.random() * cards.length)];
+  } while (randomCard === currentCard && cards.length > 1);
+
+  currentCard = randomCard;
+  audios.src = randomCard.dataset.audio;
+  audios.play();
+  
+  // Update player UI with random song info
+  const img = randomCard.querySelector('img').src;
+  const title = randomCard.querySelector('p').innerText;
+  const songer = randomCard.querySelector('span').textContent;
+  
+  albumImg.src = img;
+  songTitle.innerText = title;
+  artist.textContent = songer;
+  
+  // Update current index to match the random song
+  currentIndex = Array.from(cards).indexOf(randomCard);
+}
+
+/* ⏭ Auto change song when finished */
+audios.addEventListener("ended", () => {
+  if (isLooping) {
+    audios.currentTime = 0;
+    audios.play();
+  } else if (isShuffle) {
+    playRandomSong();
+  }
+});
+
+/* ======================
+  CHANGE SONG
+====================== */
+
+const cardone = document.querySelectorAll(".music-card");
+const audioOne = document.getElementById("audioPlayer");
+
+const nextBtn = document.getElementById("sa"); // ⏭
+const prevBtn = document.getElementById("va"); // ⏮
+
+let currentIndex = 0;
+
+// ▶ Play song by index
+function playSong(index) {
+  const card = cards[index];
+  const song = card.dataset.audio;
+  const img = card.querySelector('img').src;
+  const title = card.querySelector('p').innerText;
+  const songer = card.querySelector('span').textContent;
+  
+  audioOne.src = song;
+  audioOne.play();
+  
+  // Update player UI
+  albumImg.src = img;
+  songTitle.innerText = title;
+  artist.textContent = songer;
+
+  // Active UI (optional)
+  cardone.forEach(card => card.classList.remove("active"));
+  cardone[index].classList.add("active");
+}
+
+// 🎵 Click card
+cardone.forEach((card, index) => {
+  card.addEventListener("click", () => {
+    currentIndex = index;
+    playSong(currentIndex);
+    
+    // Show player and hide list
+    favorite.style.display = 'none';
+    playMusic.style.display = 'block';
+    playBtn.innerText = '⏸';
+    isPlaying = true;
+  });
+});
+
+// ⏭ Next
+nextBtn.addEventListener("click", () => {
+  currentIndex++;
+
+  if (currentIndex >= cardone.length) {
+    currentIndex = 0;
+  }
+
+  playSong(currentIndex);
+});
+
+// ⏮ Previous
+prevBtn.addEventListener("click", () => {
+  currentIndex--;
+
+  if (currentIndex < 0) {
+    currentIndex = cards.length - 1;
+  }
+
+  playSong(currentIndex);
+});
+
+/* ======================
+  VOLUME CONTROLS
+====================== */
+const volumeUpBtn = document.querySelector('.controls .bx-volume-full');
+const volumeDownBtn = document.querySelector('.controls .bx-volume-mute');
+
+volumeUpBtn.addEventListener('click', () => {
+  if (audio.volume < 1) {
+    audio.volume = Math.min(1, audio.volume + 0.1);
+    showVolumeNotification();
+  }
+});
+
+volumeDownBtn.addEventListener('click', () => {
+  if (audio.volume > 0) {
+    audio.volume = Math.max(0, audio.volume - 0.1);
+    showVolumeNotification();
+  }
+});
+
+function showVolumeNotification() {
+  const volumePercent = Math.round(audio.volume * 100);
+  console.log(`Volume: ${volumePercent}%`);
+}
+
+/* ======================
+  PROGRESS SOUND VISUALIZATION
+====================== */
+const waveformBars = document.querySelectorAll('.waveform .bar');
+
+function animateWaveform() {
+  if (isPlaying) {
+    waveformBars.forEach((bar, index) => {
+      const height = Math.random() * 100;
+      bar.style.height = `${height}%`;
+      bar.style.opacity = '0.8';
+    });
+  } else {
+    waveformBars.forEach(bar => {
+      bar.style.height = '20%';
+      bar.style.opacity = '0.3';
+    });
+  }
+}
+
+// Update waveform animation based on audio
+audio.addEventListener('timeupdate', () => {
+  if (isPlaying) {
+    animateWaveform();
+  }
+});
+
+setInterval(() => {
+  if (isPlaying) {
+    animateWaveform();
+  }
+}, 200);
+
+/* ======================
+  ENHANCED PROGRESS BAR
+====================== */
+progressBar.addEventListener('input', () => {
+  const seekTime = (progressBar.value / 100) * audio.duration;
+  audio.currentTime = seekTime;
+});
+
+// Add hover effect to show time on progress bar
+progressBar.addEventListener('mousemove', (e) => {
+  const rect = progressBar.getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  const hoverTime = percent * audio.duration;
+  progressBar.title = formatTime(hoverTime);
+});
+
+/* ======================
+  change music
+====================== */
+
+
 
