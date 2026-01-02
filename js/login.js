@@ -25,7 +25,7 @@ const userPassword =document.getElementById('userpassword')
 
 login.addEventListener('click',()=>{
   const user = localStorage.getItem("user");
-  for (let data of JSON.parse(user) ){
+  for (let data of JSON.parse(user) ){ 
     console.log(data.password)
     console.log(userPassword.value===data.password)
     if (userPassword.value===data.password && userName.value===data.name || userName.value===data.email ){
