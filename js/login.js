@@ -22,11 +22,12 @@ const userPassword =document.getElementById('userpassword')
 
 // let user = [];
 // localStorage.setItem('user',JSON.stringify(user));
-// localStorage.removeItem("user");
 
 login.addEventListener('click',()=>{
-  const users = localStorage.getItem("user");
-  for (let data of JSON.parse(users) ){ 
+  const user = localStorage.getItem("user");
+  for (let data of JSON.parse(user) ){
+    console.log(data.password)
+    console.log(userPassword.value===data.password)
     if (userPassword.value===data.password && userName.value===data.name || userName.value===data.email ){
       aTag.href='home.html';
   }
@@ -36,10 +37,8 @@ login.addEventListener('click',()=>{
 btn.addEventListener("click", (e) => {
   e.preventDefault();
   if(count>=8){
-      let user = [];
-localStorage.setItem('user',JSON.stringify(user));
-    const users = localStorage.getItem("user");
-    let userAppend = JSON.parse(users);
+    const user = localStorage.getItem("user");
+    let userAppend = JSON.parse(user);
     userAppend.forEach((u) => {
       console.log(u.name);
       console.log(u.email);
