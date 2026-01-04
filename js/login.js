@@ -12,34 +12,34 @@ const name = document.getElementById("name");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const btn = document.getElementById("btn");
-const text= document.querySelector('#text')
-let count=0;
+const text = document.querySelector('#text')
+let count = 0;
 
 const login = document.getElementById("login");
-const aTag= login.querySelector('a')
-const userName= document.getElementById('username')
-const userPassword =document.getElementById('userpassword')
+const aTag = login.querySelector('a')
+const userName = document.getElementById('username')
+const userPassword = document.getElementById('userpassword')
 
-// let user = [];
-// localStorage.setItem('user',JSON.stringify(user));
-// localStorage.removeItem("user");
 
-login.addEventListener('click',()=>{
-  const users = localStorage.getItem("user");
-  for (let data of JSON.parse(users) ){ 
-    if (userPassword.value===data.password && userName.value===data.name || userName.value===data.email ){
-      aTag.href='home.html';
-  }
+login.addEventListener('click', () => {
+  const user = localStorage.getItem("user");
+  for (let data of JSON.parse(user)) {
+    console.log(data.password)
+    console.log(userPassword.value === data.password)
+    if (userPassword.value === data.password && userName.value === data.name || userName.value === data.email) {
+      aTag.href = 'home.html';
+    }
   }
 })
 
 btn.addEventListener("click", (e) => {
   e.preventDefault();
-  if(count>=8){
-      let user = [];
-localStorage.setItem('user',JSON.stringify(user));
-    const users = localStorage.getItem("user");
-    let userAppend = JSON.parse(users);
+
+  let user = [];
+  localStorage.setItem('user', JSON.stringify(user));
+  if (count >= 8) {
+    const user = localStorage.getItem("user");
+    let userAppend = JSON.parse(user);
     userAppend.forEach((u) => {
       console.log(u.name);
       console.log(u.email);
@@ -50,34 +50,34 @@ localStorage.setItem('user',JSON.stringify(user));
       email: email.value,
       password: password.value,
     };
-  
+
     console.log(newUser);
     userAppend.push(newUser);
-  
+
     localStorage.setItem("user", JSON.stringify(userAppend));
-  
+
     name.value = "";
     email.value = "";
     password.value = "";
-    count=0;
-    text.style.color='white'
+    count = 0;
+    text.style.color = 'white'
     container.classList.remove("right-panel-active");
   }
 });
 
-password.addEventListener('input',()=>{
-      if(event.data===null){
-        count-=1
-      }
-      else{
-        count+=1
-      }
-      if (count<=7 && count>=0){
-        text.style.color='red';
-      }
-      else{
-        text.style.color='green';
-      }
+password.addEventListener('input', () => {
+  if (event.data === null) {
+    count -= 1
+  }
+  else {
+    count += 1
+  }
+  if (count <= 7 && count >= 0) {
+    text.style.color = 'red';
+  }
+  else {
+    text.style.color = 'green';
+  }
 })
 
 
@@ -88,28 +88,28 @@ openEyeR.addEventListener("click", () => {
   openEyeR.style.display = "none";
   closeEyeR.style.display = "block";
   for (let show of showPassword) {
-    show.type='text';
+    show.type = 'text';
   }
 });
 closeEyeR.addEventListener("click", () => {
   closeEyeR.style.display = "none";
   openEyeR.style.display = "block";
   for (let show of showPassword) {
-    show.type='password';
+    show.type = 'password';
   }
 });
 openEyeL.addEventListener("click", () => {
   openEyeL.style.display = "none";
   closeEyeL.style.display = "block";
   for (let show of showPassword) {
-    show.type='text';
+    show.type = 'text';
   }
 });
 closeEyeL.addEventListener("click", () => {
   closeEyeL.style.display = "none";
   openEyeL.style.display = "block";
   for (let show of showPassword) {
-    show.type='password';
+    show.type = 'password';
   }
 });
 
